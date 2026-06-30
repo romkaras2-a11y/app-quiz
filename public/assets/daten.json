@@ -1,0 +1,105 @@
+[
+    {
+      "id": "angular-basics",
+      "title": "Angular Grundlagen",
+      "questions": [
+        {
+          "id": 1,
+          "text": "Was ist Angular?",
+          "options": ["Ein CSS-Framework", "Eine JavaScript-Plattform", "Ein Datenbank-System", "Ein Code-Editor"],
+          "correctAnswer": ["Eine JavaScript-Plattform"]
+        },
+        {
+          "id": 2,
+          "text": "Welche der folgenden sind Angular-Features?",
+          "options": ["Reactive Forms", "Directives", "Virtual DOM", "Zwei-Wege-Datenbindung"],
+          "correctAnswer": ["Reactive Forms", "Directives", "Zwei-Wege-Datenbindung"] 
+        },        
+        {
+          "id": 3,
+          "text": "Welche Datei wird als Haupteinstiegspunkt verwendet?",
+          "options": ["main.ts", "app.component.ts", "index.html", "styles.css"],
+          "correctAnswer": ["main.ts"]
+        }
+      ]
+    },{
+      "id": "javascript-advanced",
+      "title": "JavaScript Fortgeschritten",
+      "questions": [
+        {
+          "id": 101,
+          "text": "Was ist der Unterschied zwischen '==' und '==='?",
+          "options": [
+            "Es gibt keinen Unterschied.",
+            "'==' vergleicht den Wert, '===' vergleicht Wert und Datentyp.",
+            "'===' wird nur für Strings verwendet.",
+            "'==' konvertiert den Typ niemals."
+          ],
+          "correctAnswer": ["'==' vergleicht den Wert, '===' vergleicht Wert und Datentyp."]
+        },
+        {
+          "id": 102,
+          "text": "Welches Schlüsselwort deklariert eine blockbasierte Variable, die neu zugewiesen werden kann?",
+          "options": ["var", "const", "let", "global"],
+          "correctAnswer":[ "let"]
+        },{
+          "id": 103,
+          "text": "Welche Aussagen zu 'const' treffen in JavaScript zu?",
+          "options": [
+            "Die Variable hat einen Block-Scope.",
+            "Der zugewiesene Wert ist immer komplett unveränderlich (immutable).",
+            "Die Variable kann nicht neu zugewiesen werden.",
+            "Die Variable wird an das globale window-Objekt geheftet."
+          ],
+          "correctAnswer": ["Die Variable hat einen Block-Scope.", "Die Variable kann nicht neu zugewiesen werden."] 
+        },{
+          "id": 104,
+          "text": "Welche der folgenden Methoden erzeugen ein neues Array?",
+          "options": ["map()", "filter()", "forEach()", "reduce()"],
+          "correctAnswer": ["map()", "filter()"] 
+        },        
+        {
+          "id": 105,
+          "text": "Was gibt 'typeof NaN' in JavaScript zurück?",
+          "options": ["'string'", "'number'", "'undefined'", "'object'"],
+          "correctAnswer": ["'number'"]
+        }
+      ]
+    },{
+      "id": "css-styling",
+      "title": "CSS & Layouts",
+      "questions": [
+        {
+          "id": 201,
+          "text": "Mit welcher CSS-Eigenschaft zentriert man Elemente in einer Flexbox vertikal?",
+          "options": ["justify-content", "align-items", "text-align", "float"],
+          "correctAnswer":["align-items"]
+        },{
+          "id": 202,
+          "text": "Welche CSS-Eigenschaften sind Teil des Box-Modells (Box Model)?",
+          "options": ["padding", "margin", "border", "backdrop-filter"],
+          "correctAnswer": ["padding", "margin", "border"] 
+        },{
+          "id": 203,
+          "text": "Welche Werte sind gültige Positionierungen für die Eigenschaft 'position'?",
+          "options": ["absolute", "relative", "sticky", "inside"],
+          "correctAnswer": ["absolute", "relative", "sticky"] 
+        },{
+          "id": 204,
+          "text": "Was bedeutet die Abkürzung CSS?",
+          "options": [
+            "Cascading Style Sheets",
+            "Computer Style Sheets",
+            "Creative Style Systems",
+            "Colorful Style Sheets"
+          ],
+          "correctAnswer": ["Cascading Style Sheets"]
+        },{
+          "id": 205,
+          "text": "Welcher Selektor spricht ein Element mit der 'id' 'header' an?",
+          "options": [".header", "header", "#header", "*header"],
+          "correctAnswer": ["#header"]
+        }
+        ]
+    }
+]

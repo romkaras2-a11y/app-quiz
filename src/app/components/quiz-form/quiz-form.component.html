@@ -1,0 +1,57 @@
+<div class="container">
+    @if(quizData){        
+        <h2>{{ quizData.title }}</h2>
+        
+        <p>Beantworte bitte alle Fragen, um das Quiz abzuschließen.</p>
+                <!-- START: Fortschrittsanzeige -->
+        <div style="margin-top: 1.5rem;">
+            <div class="progress-text">
+            <span>Dein Fortschritt</span>
+            <span>{{ getQuizProgress() }}%</span>
+            </div>
+            <div class="progress-container">
+            <div class="progress-bar" [style.width.%]="getQuizProgress()"></div>
+            </div>
+        </div>
+        <!-- ENDE: Fortschrittsanzeige -->
+        <form [formGroup]="quizForm" (ngSubmit)="onSubmit()">
+            @for( question of quizData.questions; track question.id; let i = $index){
+            <div class="question-block">
+            <h4>Frage {{ i + 1 }}:  {{ question.text }}</h4>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">
+                ({{ isMultipleChoice(question) ? 'Mehrfachauswahl möglich' : 'Nur eine Antwort richtig' }})
+                </span>
+                @if(isMultipleChoice(question)){          
+                    <div  [formArrayName]="'question_' + question.id">
+                        <!-- FALL A: CHECKBOXEN (Mehrere Antworten richtig) -->
+                        @for(option of question.options; track option;let j = $index){
+                            <div class="question-option">
+                                <label class="option-label">
+                                    <input type="checkbox" [formControlName]="j">
+                                    {{ option }}
+                                </label>
+                            </div>            
+                        }
+                    </div> 
+                }@else{                    
+                    @for(option of question.options; track option){
+                    <div class="question-option">                        
+                        <label class="option-label">                            
+                            <input type="radio" [formControlName]="'question_' + question.id" [value]="option">
+                            {{ option }}
+                        </label>
+                    </div>
+                    }
+                }
+
+            </div>
+            }
+            <div class="button-group">
+            
+                <button type="button" class="btn-secondary" (click)="goToBack()"> Abbrechen </button>
+            <!--Submit-Button der nur aktiv ist, wenn alle Fragen beantwortet wurden-->
+                <button type="submit" [disabled]="!quizForm.valid">Quiz abschließen</button>
+            </div>
+        </form>
+    }
+</div>

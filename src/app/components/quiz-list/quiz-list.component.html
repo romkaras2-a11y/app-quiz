@@ -1,0 +1,18 @@
+
+<div class="container">
+  <h2>Willkommen zur Quiz-Anwendung</h2>
+  <p>Wähle ein Quiz aus der Liste:</p>
+  
+  <ul>
+    @for(quiz of quizzes(); track quiz.id)
+    {
+        <li>
+            <h3>{{ quiz.title }}</h3>
+            <p>Anzahl Fragen: {{ quiz.questions.length }}</p>            
+            <button (click)="startQuiz(quiz.id)">Quiz starten</button>
+        </li>        
+    }@empty {
+     <p>Keine Quizze verfügbar oder Daten werden geladen...</p> 
+    }
+  </ul>
+</div>

@@ -1,0 +1,350 @@
+ /* Grundlegendes Setup */
+body {
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: #f3f4f6;
+  color: #1f2937;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Container-Layout für alle Komponenten */
+.container {
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 550px;
+  box-sizing: border-box;  
+}
+
+/* Typografie */
+h2 {
+  font-size: 1.75rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+  font-weight:bold;
+}
+
+p {
+  color: #666666;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+/* Listen & Karten (Startseite) */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1rem; 
+}
+
+li:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+li h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.2rem;
+}
+
+li p {
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+}
+
+/* Quiz-Formular Elemente */
+.question-block {
+    position: relative;
+    padding: .5rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 0 solid transparent;
+    border-radius: .5rem;  
+    color: #331a1e;
+    background-color: #e7f3f5;
+    border-color: #b8dce2;
+}
+
+.question-block h4 {
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #1f2937;;
+}
+
+/* Stylen der Radio-Optionen als klickbare Boxen */
+.option-label {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.option-label:hover {
+  background-color: #f9fafb;
+  border-color: #006400;
+}
+
+.option-label input[type="radio"] {
+  margin-right: 0.75rem;
+  accent-color: #006400;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+.option-label input[type="checkbox"] {
+  margin-right: 0.75rem;
+  accent-color: #006400;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 4px; /* Leicht abgerundete Ecken für Checkboxen */
+}
+/* Styling für die Antwortboxen in der Ergebnisübersicht */
+.result-option {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+/* Grün: Diese Antwort ist (und bleibt) korrekt */
+.result-option.correct-answer {
+  background-color: #d1fae5;
+  border-color: #10b981;
+  color: #065f46;
+  font-weight: 600;
+}
+
+/* Rot: Vom Nutzer fälschlicherweise ausgewählt */
+.result-option.wrong-chosen {
+  background-color: #fee2e2;
+  border-color: #ef4444;
+  color: #991b1b;
+}
+
+/* Neutral: Weder richtig noch vom Nutzer gewählt */
+.result-option.not-chosen {
+  background-color: #f9fafb;
+  color: #6b7280;
+  opacity: 0.7;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  background-color: #011F3C;
+  border-color: #011F3C;
+  color: #FBFBFB !important;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer; 
+}
+
+button:hover:not(:disabled) {
+  background-color: #0f1f2f; 
+}
+
+button:active:not(:disabled) {
+   background-color: #0f1f2f; 
+}
+
+button:disabled {
+  background-color: #d1d5db;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Ergebnis-Anzeige Modifikatoren */
+.score-highlight {
+  font-size: 2.5rem;
+  color: #10b981;;
+  font-weight: 800;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+.fett{
+    font-weight: bold;
+}
+.repead-btn{
+  margin-bottom: 0.75rem; 
+  background-color: #3b82f6;
+}
+/* Container für den gesamten Fortschrittsbalken */
+.progress-container {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 8px;
+  height: 8px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+/* Der sich füllende Balken */
+.progress-bar {
+  height: 100%;
+  background-color: #006400;
+  width: 0%; /* Wird dynamisch per Angular gesteuert */
+  transition: width 0.3s ease-in-out;
+}
+
+/* Textanzeige über dem Balken */
+.progress-text {
+  font-size: 0.85rem;
+  color: #6b7280;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.button-group {
+  display: flex;
+  gap: 1rem; /* Abstand zwischen den Buttons */
+  margin-top: 1.5rem;
+}
+
+/* Modifikator für den sekundären Button (Abbrechen) */
+button.btn-secondary {
+  background-color: #6b7280; /* Neutrales Grau */
+  color: white;
+}
+
+button.btn-secondary:hover:not(:disabled) {
+  background-color: #4b5563; /* Dunkleres Grau beim Hover */
+}
+/* Container für eine komplette Frage inklusive Feedback */
+.moodle-card {
+  margin-bottom: 2.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Oberer Teil: Heller, bläulich/grauer Hintergrund für die Frage */
+.moodle-question-section {
+  background-color: #e7f3f5;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.moodle-question-text {
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  color: #1e293b;
+}
+
+/* Eine einzelne Antwortzeile */
+.moodle-option-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.moodle-input {
+  margin-right: 0.75rem;
+  cursor: not-allowed;
+  border-color: rgba(80, 80, 80, 0.9);
+  color:#666;
+}
+
+.moodle-letter {
+  color: #64748b;
+  margin-right: 0.5rem;
+  font-weight: 500;
+}
+
+.moodle-text {
+  color: #334155;
+}
+
+/* Das grüne Häkchen aus dem Screenshot */
+.moodle-checkmark {
+  color: #10b981;
+  margin-left: 0.5rem;
+  font-weight: bold;
+}
+
+/* Unterer Teil: Der e Feedback-Kasten */
+.moodle-feedback-box {
+  border-top: 1px solid #ebe3c7;
+  padding: 1.25rem 1.5rem; 
+  background-color: antiquewhite; 
+}
+
+/* Zustand: Komplett richtig (Blasses Grün) 
+.moodle-feedback-box.feedback-correct {  
+  background-color: #f0fdf4;
+  border-top-color: #dcfce7;
+  color: #166534;  
+}*/
+
+/* Zustand: Teilweise richtig (Moodle-Typisches Beige/Gelb) 
+.moodle-feedback-box.feedback-partial {  
+  background-color: #fffbeb;
+  border-top-color: #fef3c7;
+  color: #92400e;  
+}*/
+
+/* Zustand: Komplett falsch (Blasses Rot) 
+.moodle-feedback-box.feedback-wrong { 
+  background-color: #fef2f2;
+  border-top-color: #fee2e2;
+  color: #991b1b;  
+}*/
+
+/* Überschreibt die Textfarben der inneren Listen passend zum Zustand
+.feedback-correct .feedback-list li { color: #166534; }
+.feedback-partial .feedback-list li { color: #92400e; }
+.feedback-wrong .feedback-list li { color: #991b1b; }
+*/
+
+
+.feedback-status {
+  font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.feedback-label {
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.feedback-list {
+  list-style-type: disc;
+  padding-left: 0;
+  margin: 0 25px;
+}
+
+.feedback-list li {
+  padding: 0.15rem 0 !important;
+  border: none !important;
+  margin: 0 !important; 
+  color: #9a3412;
+  font-size: 0.9rem;
+}
+.feedback-list li:hover{
+  box-shadow:none;
+}

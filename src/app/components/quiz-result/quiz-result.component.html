@@ -1,0 +1,67 @@
+<div class="container" style="max-width: 800px;"> 
+  <h2>Dein Gesamtergebnis</h2>
+  <div class="score-highlight" style="margin-bottom: 2rem;">
+    {{ correctAnswers }} / {{ totalQuestions }}
+  </div>
+
+  <!-- Start der detaillierten Fragen-Auflösung im Moodle-Stil -->
+  @if(quizData){
+    <div style="text-align: left; margin-bottom: 2rem;">
+      @for(question of quizData.questions;track question.id; let i = $index){
+        <div class="moodle-card"> 
+            <div class="moodle-question-section">
+              <p class="moodle-question-text">{{ question.text }}</p>
+              @for(option of question.options; track option;let j = $index){
+                <div class="moodle-option-row">                  
+                  <input 
+                    [type]="question.correctAnswer.length > 1 ? 'checkbox' : 'radio'" 
+                    [checked]="isOptionSelected(question.id, option)" 
+                    disabled class="moodle-input">
+                  
+                  <!-- Buchstabe (a., b., c., d.) -->
+                  <span class="moodle-letter">{{ ['a', 'b', 'c', 'd', 'e'][j] }}.</span>
+                  
+                  <!-- Antworttext -->
+                  <span class="moodle-text">{{ option }}</span>
+                  
+                  <!-- Grünes Häkchen bei korrekten Antworten 
+                  @if(question.correctAnswer.includes(option)){
+                    <span  class="moodle-checkmark">✔</span>
+                  }-->
+                </div>
+              }
+            </div>
+            <div class="moodle-feedback-box" [ngClass]="{
+                'feedback-correct': getQuestionStatus(question) === 'correct',
+                'feedback-partial': getQuestionStatus(question) === 'partially-correct',
+                'feedback-wrong': getQuestionStatus(question) === 'wrong'
+              }">
+              <p class="feedback-status">
+                @if(getQuestionStatus(question) === 'correct'){ <span>Die Antwort ist richtig.</span>}
+                 @if(getQuestionStatus(question) === 'partially-correct'){<span>Die Antwort ist teilweise richtig.</span>}
+                 @if(getQuestionStatus(question) === 'wrong'){<span>Die Antwort ist falsch.</span>}
+              </p>
+              
+              <p class="feedback-label">
+               @if(question.correctAnswer.length > 1){
+                  Die richtigen Antworten sind:
+               }@else{
+                   Die richtige Antwort ist:
+               }                
+              </p>
+              <ul class="feedback-list">
+                @for(correct of question.correctAnswer;track correct){
+                  <li>{{ correct }}</li>
+                }                
+              </ul>
+          </div>
+        </div>
+      }
+    </div>
+  }
+  <!-- Navigations-Buttons -->
+  <div class="button-group">
+    <button (click)="repeatQuiz()" style="background-color: #3b82f6;">Quiz wiederholen</button>
+    <button (click)="goToBack()" style="background-color: #6b7280;">Zurück zur Startseite</button>
+  </div>
+</div>
