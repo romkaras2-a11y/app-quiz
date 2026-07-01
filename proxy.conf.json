@@ -1,0 +1,19 @@
+
+{
+  "/api-quiz": {
+    "target": "https://quizapi.io",
+    "secure": true,
+    "changeOrigin": true,
+    "headers": {
+      "Authorization": "Bearer qa_sk_a9f09e89faa242f2bc4df4df151e21415345e324",
+      "X-Api-Key": "Bearer qa_sk_a9f09e89faa242f2bc4df4df151e21415345e324",
+      "Content-Type": "application/json"
+    },
+    "pathRewrite": {
+      "^/api-quiz": ""
+    }
+  }
+
+}
+
+

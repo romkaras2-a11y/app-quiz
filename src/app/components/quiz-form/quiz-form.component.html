@@ -1,12 +1,9 @@
 <div class="container">
-    @if(quizData){        
+    @if(quizData && quizForm){        
         <h2>{{ quizData.title }}</h2>
         
         <p>Beantworte bitte alle Fragen, um das Quiz abzuschließen.</p>
-
-        <div class="timer-badge" [class.timer-urgent]="timerService.isUrgent()">
-        Verbleibende Zeit: {{ timerService.formattedTime() }}
-        </div>               
+              
                 <!-- START: Fortschrittsanzeige -->
         <div style="margin-top: 1.5rem;">
             <div class="progress-text">
@@ -26,7 +23,7 @@
                 ({{ isMultipleChoice(question) ? 'Mehrfachauswahl möglich' : 'Nur eine Antwort richtig' }})
                 </span>
                 @if(isMultipleChoice(question)){          
-                    <div  [formArrayName]="'question_' + question.id">
+                    <div  [formArrayName]="'question_' + i">
                         <!-- FALL A: CHECKBOXEN (Mehrere Antworten richtig) -->
                         @for(option of question.options; track option;let j = $index){
                             <div class="question-option">
@@ -37,14 +34,17 @@
                             </div>            
                         }
                     </div> 
-                }@else{                    
+                }@else{<!-- FALL B: RADIO-BUTTONS (Nur eine Antwort richtig) -->
                     @for(option of question.options; track option){
-                    <div class="question-option">                        
-                        <label class="option-label">                            
-                            <input type="radio" [formControlName]="'question_' + question.id" [value]="option">
-                            {{ option }}
-                        </label>
-                    </div>
+                        <div class="question-option">                        
+                            <label class="option-label">                            
+                                <input type="radio" 
+                                [formControlName]="'question_' + i"
+                                [value]="option"
+                                [name]="'question_' + i">
+                                {{ option }}
+                            </label>
+                        </div>
                     }
                 }
 

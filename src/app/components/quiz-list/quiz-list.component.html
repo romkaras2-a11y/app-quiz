@@ -6,13 +6,25 @@
   <ul>
     @for(quiz of quizzes(); track quiz.id)
     {
+       @if (quiz.id.startsWith('online_')) {
+        <li class="api-quiz-card">
+          <div class="api-badge">LIVE API</div>
+          <h3>{{ quiz.title }}</h3>
+          <p>Klicke unten, um die Live-Fragen direkt aus der IT-Datenbank zu laden.</p>
+          <button class="btn-api" (click)="_startQuiz(quiz.id)">
+            Online-Quiz starten 🌐
+          </button>
+        </li>
+       }@else{
         <li>
             <h3>{{ quiz.title }}</h3>
             <p>Anzahl Fragen: {{ quiz.questions.length }}</p>            
             <button (click)="startQuiz(quiz.id)">Quiz starten</button>
-        </li>        
+        </li>
+      }
     }@empty {
      <p>Keine Quizze verfügbar oder Daten werden geladen...</p> 
     }
+
   </ul>
 </div>

@@ -2,7 +2,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { QuizService } from '../../services/quiz.service';
+import { QuizService } from '../../services/quiz-api.service';
 import { Quiz } from '../../models/quiz.model';
 
 @Component({
@@ -35,5 +35,10 @@ export class QuizListComponent implements OnInit {
       this.router.navigate(['/quiz', quizId])
         .then(success => console.log('Navigation erfolgreich?', success))
         .catch(err => console.error('Navigationsfehler:', err));
+    }
+    
+    _startQuiz(quizId: string): void {
+      // Leitet entweder an /quiz/angular-basics ODER /quiz/random-trivia weiter
+      this.router.navigate(['/quiz', quizId]);
     }
 }
