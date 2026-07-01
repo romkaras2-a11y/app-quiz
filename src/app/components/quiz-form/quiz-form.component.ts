@@ -1,9 +1,10 @@
 // app-quiz/components/quiz-form/quiz-form.component.ts
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup,  ReactiveFormsModule, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuizService } from '../../services/quiz.service';
+import { TimerService } from '../../services/timer.service';
 import { Quiz, Question } from '../../models/quiz.model';
 import {OneCheckboxSelected} from '../../validators/quiz.validator';
 
@@ -15,37 +16,49 @@ import {OneCheckboxSelected} from '../../validators/quiz.validator';
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './quiz-form.component.html',
 })
-export class QuizFormComponent implements OnInit {
+export class QuizFormComponent implements OnInit, OnDestroy {
 
     private fb = inject(FormBuilder);
     private route = inject(ActivatedRoute);
     private router = inject(Router);
     private quizService = inject( QuizService);
+    private cdr = inject(ChangeDetectorRef);
+    public  timerService = inject(TimerService);
     // Deklaration mit Type-Zuweisung
     quizForm!: FormGroup;
     quizData: Quiz | undefined;
     quizId: string | null = null; 
- 
-// Ändere deine ngOnInit in der QuizFormComponent-Klasse wie folgt:
 
     async ngOnInit(): Promise<void> {
         this.quizId = this.route.snapshot.paramMap.get('id');
         
         if (this.quizId) {
             try {
-            // Hier nutzen wir das saubere await statt .subscribe()
-            const quiz = await this.quizService.getQuizById(this.quizId);
-            
-            if (quiz) {
-                this.quizData = quiz;
-                this.initForm();
-            }
+            // Hier nutzen wir  await für service
+                const quiz = await this.quizService.getQuizById(this.quizId);
+                
+                if (quiz) {
+                    this.quizData = quiz;
+                    this.initForm();
+                    // Timer über den Service starten und die autoSubmit-Methode als Callback übergeben
+                    const totalSeconds = quiz.questions.length * 30;
+                     this.timerService.start(totalSeconds, () => this.autoSubmit()); // <-- Timer starten 
+                    this.cdr.detectChanges(); 
+                }
             } catch (error) {
                 console.error('Fehler beim Laden des Quiz-Daten:', error);
             }
         }
     }
+    // Zerstört den Intervall-Timer, wenn der Nutzer die Seite verlässt
+    ngOnDestroy(): void {
+       this.timerService.stop();
+    }
 
+    autoSubmit(): void {
+        alert('Die Zeit ist abgelaufen! Dein Quiz wird jetzt automatisch ausgewertet.');
+        this.onSubmit();
+    }    
     // Fisher-Yates Shuffle-Algorithmus zum zufälligen Mischen von Arrays
     private shuffle<T>(array: T[]): T[] {
         const arr = [...array];
@@ -77,12 +90,15 @@ export class QuizFormComponent implements OnInit {
         //FormGroup erstellen 
         this.quizForm = this.fb.group(group);
     }
+
     isMultipleChoice(question: Question): boolean {
         return question.correctAnswer.length > 1;
-    }    
+    } 
+
     getOptionsArray(questionId: number): FormArray {
         return this.quizForm.get(`question_${questionId}`) as FormArray;
     }
+
     getQuizProgress(): number {
         if (!this.quizForm || !this.quizData) return 0;
         let answeredCount = 0;
@@ -96,6 +112,7 @@ export class QuizFormComponent implements OnInit {
     }
 
     onSubmit(): void {
+        this.timerService.stop(); // Timer stoppen
 
         if (this.quizForm.valid && this.quizId && this.quizData) {
             const userAnswers: { [key: string]: string[] } = {};
@@ -118,11 +135,14 @@ export class QuizFormComponent implements OnInit {
                 queryParams: { correct: results.correct, total: results.total }, 
                 state: { answers: userAnswers } 
             });
+        }else{
+            this.goToBack();
         }
     }
 
     
     goToBack(): void {
+        this.timerService.stop(); // Timer stoppen
         this.router.navigate(['/home']);
     }    
 }

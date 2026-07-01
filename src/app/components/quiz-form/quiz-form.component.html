@@ -3,6 +3,10 @@
         <h2>{{ quizData.title }}</h2>
         
         <p>Beantworte bitte alle Fragen, um das Quiz abzuschließen.</p>
+
+        <div class="timer-badge" [class.timer-urgent]="timerService.isUrgent()">
+        Verbleibende Zeit: {{ timerService.formattedTime() }}
+        </div>               
                 <!-- START: Fortschrittsanzeige -->
         <div style="margin-top: 1.5rem;">
             <div class="progress-text">
@@ -53,5 +57,7 @@
                 <button type="submit" [disabled]="!quizForm.valid">Quiz abschließen</button>
             </div>
         </form>
+    }@else {
+        <p>keine quiz da</p>
     }
 </div>
