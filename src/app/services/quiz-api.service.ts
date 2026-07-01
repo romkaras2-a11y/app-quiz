@@ -10,10 +10,7 @@ import { Quiz, Question } from '../models/quiz.model';
 export class QuizService {
   // Lokaler Pfad für deine eigenen Quizze
   private localJsonUrl = './assets/daten.json';
-  
-  // Dein API-Key von quizapi.io (hier eintragen)
-private apiKey = 'qa_sk_a9f09e89faa242f2bc4df4df151e21415345e324'; 
-//private apiKey =name=qza_test_&key=qa_sk_63e40941d93f375c8e0c4211d0cb41feb7e08b9c
+
 // Proxy-Ziel-URL für 5 JavaScript-Fragen
  private proxyUrl = '/api-quiz/api/v1';
 
@@ -70,10 +67,8 @@ private apiKey = 'qa_sk_a9f09e89faa242f2bc4df4df151e21415345e324';
           if (item.answers && Array.isArray(item.answers)) {
             for (const ans of item.answers) {
               // SICHERHEIT: Falls Text da ist, nutzen, ansonsten leere Strings verhindern
-              if (ans && ans.text) {                
-                
-                optionsArray.push(ans.text);
-                
+              if (ans && ans.text) { 
+                optionsArray.push(ans.text);                
                 if (ans.isCorrect === true || ans.isCorrect === 'true') {
                   correctAnswersArray.push(ans.text);
                 }
