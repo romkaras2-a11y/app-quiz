@@ -1,63 +1,146 @@
 
-# AppQuiz
+# App Quiz
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.1.
+An Angular application demonstrating a quiz platform with a modern UI, reusable components, and REST API integration.
 
-## Development server
+## Features
 
-To start a local development server, run:
+* Angular 22
+* Standalone Components
+* REST API integration
+* Environment-based configuration
+* Responsive user interface
+* Unit tests with Vitest
+
+## Requirements
+
+* Node.js 20+
+* npm
+* Angular CLI
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/romkaras2-a11y/app-quiz.git
+cd app-quiz
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+## Development
+
+The project uses Angular environments.
+
+### Development Environment
+
+`src/environments/environment.dev.ts`
+
+Example:
+
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api'
+};
+```
+
+### Production Environment
+
+`src/environments/environment.prod.ts`
+
+Example:
+
+```typescript
+export const environment = {
+  production: true,
+  apiUrl: 'https://your-api.example.com/api'
+};
+```
+
+The application should access the backend using:
+
+```typescript
+environment.apiUrl
+```
+
+instead of hardcoded URLs.
+
+## Running the application
+
+Start the development server:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Optional: Proxy Configuration
 
-```bash
-ng generate --help
+If you use a local backend, you can configure a proxy (`proxy.conf.json`) and use relative API paths during development.
+
+Example:
+
+```json
+{
+  "/api": {
+    "target": "http://localhost:8080",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
 ```
 
-## Building
+Run Angular with:
 
-To build the project run:
+```bash
+ng serve --proxy-config proxy.conf.json
+```
+
+## Build
+
+Development build:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Production build:
 
-## Running unit tests
+```bash
+ng build --configuration production
+```
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Testing
+
+Run unit tests:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Project Structure
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```text
+src/
+ ├── app/
+ ├── environments/
+ │    ├── environment.dev.ts
+ │    └── environment.prod.ts
+ ├── assets/
+ └── styles/
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Author
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-=======
-# app-quiz
-
+Roman Karas

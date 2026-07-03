@@ -17,16 +17,18 @@ import { Quiz } from '../../models/quiz.model';
 export class QuizListComponent implements OnInit {  
     // Deklaration als Signal mit einem leeren Array als Startwert
     quizzes = signal<Quiz[]>([]);
-
+    isLoaded = signal<boolean>(false); // <-- Neues Signal für den Lade-Zustand
    constructor( private quizService: QuizService,  private router: Router ) {}
     // Auf async umgestellt
     async ngOnInit(): Promise<void> {
       try {
         // Per await auf das Promise warten
         this.quizzes.set( await this.quizService.getQuizzes() );
-          
+        this.isLoaded.set(true);      
       } catch (error) {
-        console.error('Fehler beim Laden der Quiz-Übersicht:', error);
+        console.error('Fehler beim Laden der Quiz-Übersicht:', error);        
+      }finally{
+        this.isLoaded.set(true);   
       }
     }
 

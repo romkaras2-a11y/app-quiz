@@ -1,4 +1,11 @@
-<div class="container">
+<div class="container position-relative">
+        <!-- Lade-Overlay und Spinner -->
+      @if (!isLoaded()) {
+        <div class="loading-overlay">
+          <div class="spinner"></div>
+          <p>Questions werden geladen......</p>
+        </div>
+      }     
     @if(quizData && quizForm){        
         <h2>{{ quizData.title }}</h2>
         
@@ -19,7 +26,7 @@
             @for( question of quizData.questions; track question.id; let i = $index){
             <div class="question-block">
             <h4>Frage {{ i + 1 }}:  {{ question.text }}</h4>
-                <span style="font-size: 0.8rem; color: var(--text-muted);">
+                <span class="mark">
                 ({{ isMultipleChoice(question) ? 'Mehrfachauswahl möglich' : 'Nur eine Antwort richtig' }})
                 </span>
                 @if(isMultipleChoice(question)){          

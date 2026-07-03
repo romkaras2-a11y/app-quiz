@@ -1,5 +1,5 @@
 // app-quiz/components/quiz-form/quiz-form.component.ts
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject,signal, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup,  ReactiveFormsModule, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,11 +23,12 @@ export class QuizFormComponent implements OnInit {
     private router = inject(Router);
     private quizService = inject( QuizService);
     private cdr = inject(ChangeDetectorRef); 
-
+    
     // Deklaration mit Type-Zuweisung
     quizForm!: FormGroup;
     quizData: Quiz | undefined;
     quizId: string | null = null; 
+    isLoaded = signal<boolean>(false); // <-- Neues Signal für den Lade-Zustand
 
     constructor(){ }
 
@@ -42,15 +43,16 @@ export class QuizFormComponent implements OnInit {
                 if (quiz) {
                     this.quizData = quiz;
                     this.initForm();                    
-                                       
+                    this.isLoaded.set(true);                   
                     this.cdr.detectChanges(); 
                 }
             } catch (error) {
                 console.error('Fehler beim Laden des Quiz-Daten:', error);
+            }finally{
+                this.isLoaded.set(true);   
             }
         }
     }
-
 
     autoSubmit = (): void => {
         alert('Die Zeit ist abgelaufen! Dein Quiz wird jetzt automatisch ausgewertet.');    
@@ -67,7 +69,6 @@ export class QuizFormComponent implements OnInit {
         return arr;
     }
 
-
     initForm(): void {
 
         if (!this.quizData || !this.quizData.questions) {
@@ -78,8 +79,7 @@ export class QuizFormComponent implements OnInit {
         const group: any = {};
 
         this.quizData.questions.forEach((question, i) => {
-            if (!question || !question.correctAnswer) return;  
-
+            if (!question || !question.correctAnswer) return; 
             // Fallunterscheidung bei der Formular-Erstellung:
             if (question.correctAnswer.length > 1) {
                 // MEHRFACHAUSWAHL: Ein FormArray für die Checkboxen erzeugen
@@ -117,8 +117,7 @@ export class QuizFormComponent implements OnInit {
         return Math.round((answeredCount / this.quizData.questions.length) * 100);
     }
 
-    onSubmit(): void {
-        
+    onSubmit(): void {        
 
         if (this.quizForm.valid && this.quizId && this.quizData) {
             const userAnswers: { [key: string]: string[] } = {};
@@ -139,14 +138,14 @@ export class QuizFormComponent implements OnInit {
                 queryParams: { correct: results.correct, total: results.total }, 
                 state: { answers: userAnswers } 
             });
+            
         }else{
             this.goToBack();
         }
     }
 
     
-    goToBack(): void {
-        
+    goToBack(): void {        
         this.router.navigate(['/home']);
     }    
 }

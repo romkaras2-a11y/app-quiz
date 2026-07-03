@@ -80,10 +80,15 @@ li p {
 .question-block h4 {
   font-size: 1rem;
   margin-top: 0;
-  margin-bottom: 1rem;
-  color: #1f2937;;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
 }
 
+.question-block .mark{
+  font-size: 0.8rem; 
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;  
+}
 /* Stylen der Radio-Optionen als klickbare Boxen */
 .option-label {
   display: flex;

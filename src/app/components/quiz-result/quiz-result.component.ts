@@ -55,21 +55,18 @@ export class ResultComponent implements OnInit {
 
 
     getQuestionStatus(question: Question): 'correct' | 'partially-correct' | 'wrong' {
-            const userAnswersForQuestion = this.userAnswer[`question_${question.id}`] || [];
-            const correctAnswersForQuestion = question.correctAnswer || [];
+        
+            const answersQuiz = this.userAnswer[`question_${question.id}`] || [];
+            const correctAnswers = question.correctAnswer || [];
 
             // Wenn gar nichts ausgewählt wurde (Sicherheitsfall)
-            if (userAnswersForQuestion.length === 0) return 'wrong';
+            if (answersQuiz.length === 0) return 'wrong';
             // Zähle, wie viele der richtigen Antworten der Nutzer getroffen hat
-            const correctHits = correctAnswersForQuestion.filter(answer => 
-                userAnswersForQuestion.includes(answer)
-            ).length;
+            const correctHits = correctAnswers.filter( answer => answersQuiz.includes(answer) ).length;
             // Zähle, wie viele falsche Antworten der Nutzer ausgewählt hat
-            const wrongHits = userAnswersForQuestion.filter(answer => 
-                !correctAnswersForQuestion.includes(answer)
-            ).length;
+            const wrongHits = answersQuiz.filter( answer => !correctAnswers.includes(answer) ).length;
             // Fall 1: Exakter Treffer (Alle Richtigen, keine Falschen)
-            if (correctHits === correctAnswersForQuestion.length && wrongHits === 0) {
+            if (correctHits === correctAnswers.length && wrongHits === 0) {
                 return 'correct';
             }
             // Fall 2: Teilweise richtig (Mindestens ein Treffer, aber unvollständig oder mit Fehlern)

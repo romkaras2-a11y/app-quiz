@@ -1,8 +1,14 @@
 
-<div class="container">
+<div class="container position-relative">
   <h2>Willkommen zur Quiz-Anwendung</h2>
   <p>Wähle ein Quiz aus der Liste:</p>
-  
+          <!-- Lade-Overlay und Spinner -->
+      @if (!isLoaded()) {
+        <div class="loading-overlay">
+          <div class="spinner"></div>
+          <p>Quizzes werden geladen...</p>
+        </div>
+      } 
   <ul>
     @for(quiz of quizzes(); track quiz.id)
     {
