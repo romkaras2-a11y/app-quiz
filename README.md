@@ -141,6 +141,11 @@ src/
  └── styles/
 ```
 
+---
+## 📝 Lizenz
+
+MIT License - Freie Nutzung für private und kommerzielle Zwecke.
+
 ## Author
 
 Roman Karas
